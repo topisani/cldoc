@@ -1204,16 +1204,17 @@ cldoc.Doc = (function(superClass) {
   }
 
   Doc.either = function(node) {
-    var brief, doc;
-    doc = this.doc(node);
-    if (doc) {
-      return doc;
-    }
+    var brief, doc, ret;
     brief = this.brief(node);
+    doc = this.doc(node);
+    ret = '';
     if (brief) {
-      return brief;
+      ret += brief;
     }
-    return '';
+    if (doc) {
+      ret += doc;
+    }
+    return ret;
   };
 
   Doc.brief = function(node) {

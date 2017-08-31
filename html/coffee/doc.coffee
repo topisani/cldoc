@@ -19,17 +19,18 @@ class cldoc.Doc extends cldoc.Node
         super(@node)
 
     @either: (node) ->
+        brief = @brief(node)
         doc = @doc(node)
 
-        if doc
-            return doc
-
-        brief = @brief(node)
+        ret = ''
 
         if brief
-            return brief
+            ret += brief
 
-        return ''
+        if doc
+            ret += doc
+
+        return ret
 
     @brief: (node) ->
         return new Doc(node.children('brief')).render()
