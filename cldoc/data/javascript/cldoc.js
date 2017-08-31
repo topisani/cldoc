@@ -1234,11 +1234,16 @@ cldoc.Doc = (function(superClass) {
   };
 
   Doc.prototype.process_markdown = function(text) {
-    var a, html, i, j, marked_options, parts, ref2, rethtml;
+    var a, html, i, j, marked_options, parts, ref2, rend, rethtml;
+    rend = new marked.Renderer();
+    rend.codespan = function(code) {
+      return '<code>' + code.replace(/&amp;/g, "&") + '</code>';
+    };
     marked_options = {
       highlight: function(code) {
         return hljs.highlightAuto(code).value;
-      }
+      },
+      renderer: rend
     };
     marked.setOptions(marked_options);
     html = marked(text);
