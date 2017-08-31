@@ -24,26 +24,38 @@ class cldoc.Function extends cldoc.Node
             arg = $(args[i])
             argtype = new cldoc.Type(arg.children('type'))
 
-            ret += '<tr id="' + e(arg.attr('id')) + '">'
-            ret += '<td>' + e(arg.attr('name')) + '</td>'
-            ret += '<td>' + cldoc.Doc.either(arg)
+            tmp = ''
+            tmp += '<tr id="' + e(arg.attr('id')) + '">'
+            tmp += '<td>' + e(arg.attr('name')) + '</td>'
+            tmp += '<td>' + cldoc.Doc.either(arg)
+            display = cldoc.Doc.either(arg) != ''
 
             if argtype.allow_none
-                ret += '<span class="annotation">(may be <code>NULL</code>)</span>'
+                tmp += '<span class="annotation">(may be <code>NULL</code>)</span>'
+                display = true
 
-            ret += '</td></tr>'
+            tmp += '</td></tr>'
+            if display
+                ret += tmp
 
         if returntype and returntype.node.attr('name') != 'void'
-            ret += '<tr class="return">'
-            ret += '<td class="keyword">return</td>'
-            ret += '<td>' + cldoc.Doc.either(retu)
+            tmp = ''
+            tmp += '<tr class="return">'
+            tmp += '<td class="keyword">return</td>'
+            tmp += '<td>' + cldoc.Doc.either(retu)
+            display = cldoc.Doc.either(retu) != ''
 
             if returntype.transfer_ownership == 'full'
-                ret += '<span class="annotation">(owned by caller)</span>'
+                tmp += '<span class="annotation">(owned by caller)</span>'
+                display = true
             else if returntype.transfer_ownership == 'container'
-                ret += '<span class="annotation">(container owned by caller)</span>'
+                tmp += '<span class="annotation">(container owned by caller)</span>'
+                display = true
 
-            ret += '</tr>'
+            tmp += '</tr>'
+
+            if display
+                ret += tmp
 
         ret += '</table>'
 

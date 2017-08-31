@@ -436,15 +436,15 @@ class CommentsDatabase(object):
         comment = token.spelling.strip()
 
         if comment.startswith('//'):
-            if len(comment) > 2 and comment[2] == '-':
+            if len(comment) > 2 and comment[2] != '/':
                 return None
 
-            return comment[2:].strip()
+            return comment[3:].strip()
         elif comment.startswith('/*') and comment.endswith('*/'):
-            if comment[2] == '-':
+            if comment[3] != '*':
                 return None
 
-            lines = comment[2:-2].splitlines()
+            lines = comment[3:-2].splitlines()
 
             if len(lines) == 1 and len(lines[0]) > 0 and lines[0][0] == ' ':
                 return lines[0][1:].rstrip()
@@ -474,7 +474,8 @@ class Parser:
 
     identifier = Word(alphas + '_', alphanums + '_')
 
-    brief = restOfLine.setResultsName('brief') + lineEnd
+    briefline = NotAny('@') + NotAny(lineEnd + lineEnd)
+    brief = Combine(ZeroOrMore(briefline)).setResultsName('brief')
 
     paramdesc = restOfLine + ZeroOrMore(lineEnd + ~('@' | lineEnd) + Regex('[^\n]+')) + lineEnd.suppress()
     param = '@' + identifier.setResultsName('name') + White() + Combine(paramdesc).setResultsName('description')

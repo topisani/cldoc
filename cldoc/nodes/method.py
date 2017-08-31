@@ -40,7 +40,8 @@ class Method(Function):
             return self._override
 
         # Lookup in bases, recursively
-        bases = list(self.parent.bases)
+        # This is a hack. See https://github.com/jessevdk/cldoc/issues/73#issuecomment-65931442
+        bases = list(getattr(self.parent, "bases", []))
         mname = self.name
 
         self._override = []

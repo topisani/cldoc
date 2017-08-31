@@ -123,11 +123,16 @@ class Function(Node):
         self._comment.params = {}
 
         for pre in self._parsed_comment.preparam:
-            self._comment.params[pre.name] = pre.description
+            if pre.name == 'return':
+                self._comment.returns = pre.description
+            else:
+                self._comment.params[pre.name] = pre.description
 
         for post in self._parsed_comment.postparam:
             if post.name == 'return':
                 self._comment.returns = post.description
+            else:
+                self._comment.params[post.name] = post.description
 
     @property
     def return_type(self):

@@ -44,10 +44,11 @@ cldoc.Templated = (base) ->
             for x in tt
                 x = $(x)
 
-                ret += '<tr>'
-                ret += '<td>' + x.attr('name') + '</td>'
-                ret += '<td>' + cldoc.Doc.either(x) + '</td>'
-                ret += '</tr>'
+                if cldoc.Doc.either(x) != ''
+                    ret += '<tr>'
+                    ret += '<td>' + x.attr('name') + '</td>'
+                    ret += '<td>' + cldoc.Doc.either(x) + '</td>'
+                    ret += '</tr>'
 
             ret += '</table>'
 

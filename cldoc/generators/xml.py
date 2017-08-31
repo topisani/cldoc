@@ -267,6 +267,8 @@ class Xml(Generator):
             if not node.comment is None and hasattr(node.comment, 'returns') and node.comment.returns:
                 ret.append(self.doc_to_xml(node, node.comment.returns))
 
+            elem.append(ElementTree.Element("undocumented-return"))
+
             tp = self.type_to_xml(node.return_type, node.parent)
 
             ret.append(tp)
