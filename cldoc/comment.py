@@ -474,7 +474,7 @@ class Parser:
 
     identifier = Word(alphas + '_', alphanums + '_')
 
-    briefline = NotAny('@') + NotAny(lineEnd + lineEnd)
+    briefline = NotAny('@') + (Regex('[^\n]+') + lineEnd)
     brief = Combine(ZeroOrMore(briefline)).setResultsName('brief')
 
     paramdesc = restOfLine + ZeroOrMore(lineEnd + ~('@' | lineEnd) + Regex('[^\n]+')) + lineEnd.suppress()
