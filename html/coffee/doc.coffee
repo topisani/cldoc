@@ -43,18 +43,20 @@ class cldoc.Doc extends cldoc.Node
 
         return text.replace(r, (m) -> "\\" + m)
 
+    unescape: (text) ->
+        return text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+
     process_markdown: (text) ->
         rend = new marked.Renderer()
-        rend.codespan =  (code) ->
-            # Marked escapes the code tags, which are already escaped by the xml generator
-            return '<code>' + code.replace(/&amp;/g, "&") + '</code>'
 
-        marked_options = 
+        marked_options =
             highlight: (code) ->
                 return hljs.highlightAuto(code).value
             renderer: rend
+
         marked.setOptions(marked_options)
-        html = marked(text)
+
+        html = marked(@unescape(@unescape(text)))
 
         parts = html.split(Doc.magic_separator)
         rethtml = ''

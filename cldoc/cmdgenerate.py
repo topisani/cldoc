@@ -17,6 +17,19 @@ import sys, os, argparse, tempfile, subprocess, shutil
 from . import fs, staticsite
 from . import log
 
+def copytree(src, dst, pred = lambda f: True):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            copytree(s, d)
+        else:
+            if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
+                if pred(s):
+                    shutil.copy2(s, d)
+
 def run_generate(t, opts):
     if opts.type != 'html' and opts.type != 'xml':
         return
@@ -126,6 +139,8 @@ def run(args):
 
     if opts.merge:
         t.merge(opts.merge_filter, opts.merge)
+        for f in opts.merge:
+            copytree(f, opts.output, lambda f: not f.endswith(".md"));
 
     t.cross_ref()
 

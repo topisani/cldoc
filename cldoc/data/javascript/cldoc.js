@@ -1233,12 +1233,13 @@ cldoc.Doc = (function(superClass) {
     });
   };
 
+  Doc.prototype.unescape = function(text) {
+    return text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+  };
+
   Doc.prototype.process_markdown = function(text) {
     var a, html, i, j, marked_options, parts, ref2, rend, rethtml;
     rend = new marked.Renderer();
-    rend.codespan = function(code) {
-      return '<code>' + code.replace(/&amp;/g, "&") + '</code>';
-    };
     marked_options = {
       highlight: function(code) {
         return hljs.highlightAuto(code).value;
@@ -1246,7 +1247,7 @@ cldoc.Doc = (function(superClass) {
       renderer: rend
     };
     marked.setOptions(marked_options);
-    html = marked(text);
+    html = marked(this.unescape(this.unescape(text)));
     parts = html.split(Doc.magic_separator);
     rethtml = '';
     for (i = j = 0, ref2 = parts.length - 2; j <= ref2; i = j += 3) {
