@@ -441,7 +441,7 @@ class CommentsDatabase(object):
 
             return comment[3:].strip()
         elif comment.startswith('/*') and comment.endswith('*/'):
-            if comment[3] != '*':
+            if comment[2] != '*':
                 return None
 
             lines = comment[3:-2].splitlines()
