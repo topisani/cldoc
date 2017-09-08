@@ -106,7 +106,7 @@ class cldoc_generate(Command):
 
         subprocess.call(args + files)
 
-        for css in glob.glob('html/styles/*.css'):
+        for css in glob.glob('html/styles/*'):
             shutil.copyfile(css, 'cldoc/data/styles/' + os.path.basename(css))
 
     def run_inline(self):

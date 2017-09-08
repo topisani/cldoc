@@ -19,15 +19,36 @@ $link_color: $solarized_blue;
 $sidebar_bg_color: #eee;
 $sidebar_width: 260px;
 $header_color: #333;
-$selection_color: #ffffab;
+$selection_color: #ffe9c9;
 
 $builtin_color: $solarized_yellow;
-$keyword_color: $solarized_orange;
+$keyword_color: #ff5503;
 $string_color: $solarized_red;
 $number_color: $solarized_green;
-$identifier_color: $solarized_blue;
+$identifier_color: #af054c;
 $preprocessor_color: $solarized_violet;
 $comment_color: $solarized_base1;
 
 $scrollbar_bg_color: darken($sidebar_bg_color, 10%);
 $scrollbar_color: darken($sidebar_bg_color, 30%);
+
+$text_font: 'Roboto';
+$code_font: 'Inconsolata';
+$header_font: 'TOP-1';
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
+
+@font-face {
+    font-family: TOP-1;
+    src: url('/styles/TOP-1-Light.ttf') format('truetype');
+}
+
+.screenshots {
+  text-align: center;
+
+  img {
+    width: 320px;
+    height: auto;
+  };
+}

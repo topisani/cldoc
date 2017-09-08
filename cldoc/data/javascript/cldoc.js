@@ -1295,7 +1295,7 @@ cldoc.Doc = (function(superClass) {
         tag = c.tagName.toLowerCase();
         if (tag === 'ref') {
           c = $(c);
-          astext += this.escape(msep + c.attr('ref') + msep + c.text() + msep);
+          astext += '<code>' + this.escape(msep + c.attr('ref') + msep + c.text() + msep) + '</code>';
         } else if (tag === 'code') {
           if (astext) {
             ret += this.process_markdown(astext);
