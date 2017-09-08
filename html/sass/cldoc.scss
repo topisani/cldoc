@@ -548,7 +548,6 @@ $in_group_row_spacing: 40px;
 
       div.declaration.selected {
         background-color: $selection_color;
-        border: 1px solid darken($selection_color, 40%);
       }
 
       table.declaration {
